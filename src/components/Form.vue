@@ -11,10 +11,10 @@
                                 :value="item.value">
                         </el-option>
                     </el-select>
-                    <el-button class="item-button" v-show="calculationStarted" :disabled="!calculationStarted"
-                               size="mini" type="primary"
-                               @click="changeMachine">更换铸机
-                    </el-button>
+<!--                    <el-button class="item-button" v-show="calculationStarted" :disabled="!calculationStarted"-->
+<!--                               size="mini" type="primary"-->
+<!--                               @click="changeMachine">更换铸机-->
+<!--                    </el-button>-->
                 </el-form-item>
             </div>
 
@@ -28,10 +28,10 @@
                                 :value="item.value">
                         </el-option>
                     </el-select>
-                    <el-button class="item-button" v-show="calculationStarted" :disabled="!calculationStarted"
-                               type="primary" size="mini"
-                               @click="addSteelType">添加钢种
-                    </el-button>
+<!--                    <el-button class="item-button" v-show="calculationStarted" :disabled="!calculationStarted"-->
+<!--                               type="primary" size="mini"-->
+<!--                               @click="addSteelType">添加钢种-->
+<!--                    </el-button>-->
                 </el-form-item>
             </div>
 
@@ -179,12 +179,6 @@
                                              placeholder="窄面水量"></el-input-number>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="4">
-                        <el-button class="item-button" v-show="calculationStarted" :disabled="!calculationStarted"
-                                   size="mini" type="primary"
-                                   icon="el-icon-right"
-                                   @click="change(item)"></el-button>
-                    </el-col>
                 </el-form-item>
             </div>
             <!-- 暂时没有用到 -->
@@ -226,13 +220,9 @@
                 <el-button :round="true" size="small" type="warning" @click="showDetailCurves"
                            :disabled="!calculationStarted">查看纵切面温度分布
                 </el-button>
-                <el-button :round="true" size="small" type="warning" @click="startTail" :disabled="!calculationStarted">
-                    拉尾坯
-                </el-button>
-                <el-button :round="true" size="small" type="warning" @click="generateData"
-                           :disabled="calculationStarted">
-                    测试
-                </el-button>
+<!--                <el-button :round="true" size="small" type="warning" @click="startTail" :disabled="!calculationStarted">-->
+<!--                    拉尾坯-->
+<!--                </el-button>-->
             </div>
 
         </div>
@@ -308,10 +298,6 @@
             }
         },
         methods: {
-            change: function (item) {
-                // todo
-                console.log(item)
-            },
             selectCaster: function (caster) {
                 console.log(caster)
                 let message = {
@@ -320,12 +306,13 @@
                 }
                 this.connection.send(JSON.stringify(message));
             },
-            changeMachine: function () {
-                console.log(this.form.machineValue)
-            },
-            addSteelType: function () {
-                console.log(this.form.steelValue)
-            },
+            // todo
+            // changeMachine: function () {
+            //     console.log(this.form.machineValue)
+            // },
+            // addSteelType: function () {
+            //     console.log(this.form.steelValue)
+            // },
             changeInitialTemp: function () {
                 let message = {
                     type: "change_initial_temp",
@@ -415,13 +402,13 @@
                 this.connection.send(JSON.stringify(message));
                 console.log("stop to calculate")
             },
-            startTail: function () {
-                let message = {
-                    type: "tail",
-                    content: "start to tail"
-                }
-                this.connection.send(JSON.stringify(message));
-            },
+            // startTail: function () {
+            //     let message = {
+            //         type: "tail",
+            //         content: "start to tail"
+            //     }
+            //     this.connection.send(JSON.stringify(message));
+            // },
             showDetailSlice: function () {
                 let config = this.casterCfg
                 this.$root.$emit("show_detail_slice", {show: true, config: config, conn: this.connection})
@@ -430,13 +417,6 @@
                 let config = this.casterCfg
                 this.$root.$emit("show_detail_curves", {show: true, config: config, conn: this.connection})
             },
-            generateData: function () {
-                let message = {
-                    type: "generate",
-                    content: "generate_data",
-                }
-                this.connection.send(JSON.stringify(message));
-            }
         },
         created: function () {
             let self = this
@@ -490,29 +470,10 @@
                         console.log(data.content)
                         break
                     }
-                    case "tail_start": {
-                        console.log(data.content)
-                        break
-                    }
-                    case "slice_detail": {
-                        // console.log(data.content)
-                        let content = JSON.parse(data.content)
-                        self.$root.$emit("new_slice_detail", content)
-                        break
-                    }
-                    case "start_push_slice_detail_success": {
-                        console.log(data.content)
-                        break
-                    }
-                    case "stop_push_slice_detail_success": {
-                        console.log(data.content)
-                        break
-                    }
-                    case "data_generate": {
-                        let content = JSON.parse(data.content)
-                        self.$root.$emit("data_generated", content)
-                        break
-                    }
+                    // case "tail_start": {
+                    //     console.log(data.content)
+                    //     break
+                    // }
                     case "slice_generated": {
                         let content = JSON.parse(data.content)
                         self.$root.$emit("slice_generated", content)

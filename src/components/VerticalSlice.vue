@@ -9,21 +9,21 @@
                 </div>
                 <div id="canvas_container" style="width: 100%; height: 820px;"></div>
                 <div class="slice_bottom">
+                    <div class="operation">
+                        <el-input-number size="mini" v-model="index2" :step="1" :max="max" :min="1"></el-input-number>
+                        <el-button size="mini" style="margin-left: 10px;" round type="primary"
+                                   @click="showVerticalSlice2AtIndex(index2-1)">查看相应位置纵切片数据
+                        </el-button>
+                    </div>
                     <div class="slider_container">
                         <div>
-                            <span class="demonstration">距离铸坯边界距离mm</span>
                             <el-slider
                                     :max="max"
+                                    :marks="marks"
                                     v-model="index2"
                                     :step="1">
                             </el-slider>
                         </div>
-                    </div>
-                    <div class="operation">
-                        <el-input-number size="mini" v-model="index2" :step="1" :max="max" :min="1"></el-input-number>
-                        <el-button size="mini" style="margin-left: 10px;" round type="primary"
-                                   @click="showVerticalSlice2AtIndex(index2-1)">查看对应距离纵切片数据
-                        </el-button>
                     </div>
                 </div>
                 <div class="distance_bottom">
@@ -94,6 +94,10 @@
         props: ['conn', 'config'],
         data() {
             return {
+                marks: {
+                    0: "角部",
+                    630: "宽面中心"
+                },
                 max: 1,
                 maxZLength: 1,
                 option: {
