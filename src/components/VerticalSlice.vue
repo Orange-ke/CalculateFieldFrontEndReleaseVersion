@@ -192,10 +192,10 @@
                 zScale: 10,
                 xScale: 5,
                 yScale: 5,
-                zScaleUp: 5,
+                zScaleUp: 2,
                 yScaleUp: 4,
                 scaleDown: 1,
-                pointSize: 13.5,
+                pointSize: 10,
                 zIndexSoFar: 0,
                 rOut: 0,
                 rIn: 0,
@@ -378,7 +378,7 @@
                 console.log(liquid, solid)
                 let liquidValue = liquid[index] * 5
                 let solidValue = solid[index] * 5
-                let text = "L : " + liquidValue + " (mm) , S : " + solidValue + " (mm)"
+                let text = "L : " + liquidValue.toFixed(1) + " (mm) , S : " + solidValue.toFixed(1) + " (mm)"
                 if (index < this.upLength) {
                     this.text = this.createText(text, -this.rOut / this.scaleDown + this.yLength * this.yScaleUp + this.offset, (this.upLength - index) / this.scaleDown, 0, 0)
                 } else if (index < this.upLength + this.arcLength) {
@@ -630,7 +630,6 @@
                 let end = Math.floor(Math.min(this.upLength, data.length))
                 for (let i = start; i < end / this.zScaleUp; i++) {
                     if (data[i * this.zScaleUp] === 0) {
-                        console.log(data[i * this.zScaleUp], "hi there")
                         continue
                     }
                     // positions
@@ -663,6 +662,10 @@
                         if (data[i * this.zScaleUp] === 0) {
                             continue
                         }
+                        if (index !== -1 && (i * this.zScaleUp > index || joined)) {
+                            joined = true
+                            break
+                        }
                         // positions
                         let xy = this.calculateXY(0, 0, rOut / this.scaleDown - data[i * this.zScaleUp] * this.yScaleUp, 90 * zStart * this.zScaleUp / this.arcLength * Math.PI / 180)
                         positions.push(xy.x2, xy.y2, 0)
@@ -677,11 +680,6 @@
                         colors.push(vx, vy, vz)
                         colors.push(vx, vy, vz)
                         zStart++
-                        if (index !== -1 && (i * this.zScaleUp > index || joined)) {
-                            console.log("join", "??????")
-                            joined = true
-                            break
-                        }
                     }
                 }
                 // down
@@ -692,6 +690,10 @@
                     for (let i = start / this.zScaleUp; i < end / this.zScaleUp; i++) {
                         if (data[i * this.zScaleUp] === 0) {
                             continue
+                        }
+                        if (index !== -1 && (i * this.zScaleUp > index || joined)) {
+                            joined = true
+                            break
                         }
                         // positions
                         positions.push(xStart * this.zScaleUp / this.scaleDown, -this.rOut / this.scaleDown + data[i * this.zScaleUp] * this.yScaleUp, 0)
@@ -706,10 +708,6 @@
                         colors.push(vx, vy, vz)
                         colors.push(vx, vy, vz)
                         xStart++
-                        if (index !== -1 && (i * this.zScaleUp > index || joined)) {
-                            joined = true
-                            break
-                        }
                     }
                 }
                 colors1 = colors

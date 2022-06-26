@@ -93,6 +93,7 @@
                 HorizontalLiquidThickness: 0,
                 VerticalSolidThickness: 0,
                 VerticalLiquidThickness: 0,
+                zScale: 10,
 
                 raycaster: undefined,
                 pointer: undefined,
@@ -306,11 +307,7 @@
             },
             showSliceDetail: function (index) {
                 console.log(this.sliceIndex)
-                // let message = {
-                //     type: "start_push_slice_detail",
-                //     content: String(index)
-                // }
-                index = Math.floor(index / 10) - 1
+                index = Math.floor(index / this.zScale) - 1
                 let message = {
                     type: "generate_slice",
                     content: String(index)
@@ -366,10 +363,10 @@
             this.$root.$on("slice_generated", (data) => {
                 console.log(data)
                 self.buildShapes(data.slice, self.sliceWidth, self.sliceHeight)
-                self.HorizontalSolidThickness = data.horizontal_solid_thickness
-                self.HorizontalLiquidThickness = data.horizontal_liquid_thickness
-                self.VerticalSolidThickness = data.vertical_solid_thickness
-                self.VerticalLiquidThickness = data.vertical_liquid_thickness
+                self.HorizontalSolidThickness = data.horizontal_solid_thickness.toFixed(1)
+                self.HorizontalLiquidThickness = data.horizontal_liquid_thickness.toFixed(1)
+                self.VerticalSolidThickness = data.vertical_solid_thickness.toFixed(1)
+                self.VerticalLiquidThickness = data.vertical_liquid_thickness.toFixed(1)
             })
 
             // this.showSliceDetail(this.start)

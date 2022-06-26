@@ -17,7 +17,6 @@
 <!--                    </el-button>-->
                 </el-form-item>
             </div>
-
             <div class="group">
                 <el-form-item label="选择钢种" prop="steelValue">
                     <el-select size="small" v-model="form.steelValue" placeholder="请选择">
@@ -34,7 +33,6 @@
 <!--                    </el-button>-->
                 </el-form-item>
             </div>
-
             <div class="group">
                 <el-form-item label="浇注温度" prop="startTemperature">
                     <el-input-number size="small" v-model="form.startTemperature" :precision="2" :step="1"
@@ -45,14 +43,12 @@
                                @click="changeInitialTemp"></el-button>
                 </el-form-item>
             </div>
-
             <div class="group">
                 <el-form-item label="弯月面高度" prop="levelHeight">
                     <el-input-number size="small" v-model="form.levelHeight" :precision="2" :step="1"
                                      :max="200" :min="0"></el-input-number>
                 </el-form-item>
             </div>
-
             <div class="group">
                 <el-form-item label="计算方式" prop="calculateMethodValue">
                     <el-select size="small" v-model="form.calculateMethodValue" placeholder="请选择">
@@ -65,14 +61,12 @@
                     </el-select>
                 </el-form-item>
             </div>
-
             <div class="group">
                 <el-form-item label="是否存在电磁制动/搅拌">
                     <el-checkbox v-model="form.is_electromag_brake">电磁制动</el-checkbox>
                     <el-checkbox v-model="form.is_electromag_stir">电磁搅拌</el-checkbox>
                 </el-form-item>
             </div>
-
             <div class="group">
                 <el-form-item label="拉速" prop="dragSpeed">
                     <el-input-number size="small" v-model="form.dragSpeed" :precision="2" :step="0.1" :min="1.5"
@@ -83,7 +77,6 @@
                                @click="changeV"></el-button>
                 </el-form-item>
             </div>
-
             <div class="group">
                 <el-form-item label="结晶器铜板窄面">
                     <el-col :span="12">
@@ -145,7 +138,6 @@
                     </el-col>
                 </el-form-item>
             </div>
-
             <div class="group" v-for="item in casterCfg.cooling_zone" :key="item.zone_name">
                 <el-form-item :label="item.zone_name">
                     <el-col :span="10">
@@ -181,7 +173,6 @@
                     </el-col>
                 </el-form-item>
             </div>
-            <!-- 暂时没有用到 -->
             <div class="group">
                 <el-form-item label="计算水表的拉速范围">
                     <el-col :span="8">
@@ -201,9 +192,7 @@
                     </el-col>
                 </el-form-item>
             </div>
-
             <div style="height: 100px;"></div>
-
             <div id="operations">
                 <el-button :round="true" size="small" type="primary" :disabled="calculationStarted"
                            @click="setCalculateEnv('ruleForm')">设置计算环境
@@ -224,7 +213,6 @@
 <!--                    拉尾坯-->
 <!--                </el-button>-->
             </div>
-
         </div>
     </el-form>
 </template>
@@ -322,9 +310,9 @@
             },
             changeNarrowSurface: function () {
                 let narrowSurface = {
-                    in: this.form.md.narrowSurfaceIn,
-                    out: this.form.md.narrowSurfaceOut,
-                    volume: this.form.md.narrowSurfaceVolume
+                    in: this.form.md.narrow_surface_in,
+                    out: this.form.md.narrow_surface_out,
+                    volume: this.form.md.narrow_surface_volume
                 }
                 let message = {
                     type: "change_narrow_surface",
@@ -334,9 +322,9 @@
             },
             changeWideSurface: function () {
                 let wideSurface = {
-                    in: this.form.md.wideSurfaceIn,
-                    out: this.form.md.wideSurfaceOut,
-                    volume: this.form.md.wideSurfaceVolume
+                    in: this.form.md.wide_surface_in,
+                    out: this.form.md.wide_surface_out,
+                    volume: this.form.md.wide_surface_volume
                 }
                 let message = {
                     type: "change_wide_surface",
