@@ -191,7 +191,8 @@
                     legend: {
                         orient: "vertical",
                         left: "right",
-                        data: ["宽面中心坯壳厚度", "宽面中心液相线距离边缘厚度", "窄面中心坯壳厚度", "窄面中心液相线距离边缘厚度"]
+                        // data: ["宽面中心坯壳厚度", "宽面中心液相线距离边缘厚度", "窄面中心坯壳厚度", "窄面中心液相线距离边缘厚度"]
+                        data: ["宽面中心坯壳厚度", "宽面中心液相线距离边缘厚度"]
                     },
                     xAxis: [
                         {
@@ -236,24 +237,24 @@
                             yAxisIndex: 0,
                             data: []
                         },
-                        {
-                            name: "窄面中心坯壳厚度",
-                            type: 'line',
-                            smooth: true,
-                            color: "#2196F3",
-                            xAxisIndex: 0,
-                            yAxisIndex: 0,
-                            data: []
-                        },
-                        {
-                            name: "窄面中心液相线距离边缘厚度",
-                            type: 'line',
-                            smooth: true,
-                            color: "#4CAF50",
-                            xAxisIndex: 0,
-                            yAxisIndex: 0,
-                            data: []
-                        }
+                        // {
+                        //     name: "窄面中心坯壳厚度",
+                        //     type: 'line',
+                        //     smooth: true,
+                        //     color: "#2196F3",
+                        //     xAxisIndex: 0,
+                        //     yAxisIndex: 0,
+                        //     data: []
+                        // },
+                        // {
+                        //     name: "窄面中心液相线距离边缘厚度",
+                        //     type: 'line',
+                        //     smooth: true,
+                        //     color: "#4CAF50",
+                        //     xAxisIndex: 0,
+                        //     yAxisIndex: 0,
+                        //     data: []
+                        // }
                     ]
                 },
                 container: undefined,
@@ -403,8 +404,8 @@
                     console.log(data)
                     this.option1.series[0].data = data.wide_shell_width
                     this.option1.series[1].data = data.wide_liquid_width
-                    this.option1.series[2].data = data.narrow_shell_width
-                    this.option1.series[3].data = data.narrow_liquid_width
+                    // this.option1.series[2].data = data.narrow_shell_width
+                    // this.option1.series[3].data = data.narrow_liquid_width
                 })
             })
 

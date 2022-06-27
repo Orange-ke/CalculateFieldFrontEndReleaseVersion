@@ -4,14 +4,14 @@
             <span>当前横截面距离液面顶端距离 {{sliceIndex}} mm</span>
         </div>
         <div class="data_info1 font_glow">
-            <div>窄边中轴线铸壳厚度：{{HorizontalSolidThickness}}mm / 1260mm</div>
+            <div>窄边中轴线铸壳厚度：{{HorizontalSolidThickness}}mm</div>
             <br>
-            <div>窄边中轴线液相线离边缘距离：{{HorizontalLiquidThickness}}mm / 1260mm</div>
+            <div>窄边中轴线液相线离边缘距离：{{HorizontalLiquidThickness}}mm</div>
         </div>
         <div class="data_info2 font_glow">
-            <div>宽边中轴线铸壳厚度：{{VerticalSolidThickness}}mm / 230mm</div>
+            <div>宽边中轴线铸壳厚度：{{VerticalSolidThickness}}mm</div>
             <br>
-            <div>宽边中轴线液相线离边缘距离：{{VerticalLiquidThickness}}mm / 230mm</div>
+            <div>宽边中轴线液相线离边缘距离：{{VerticalLiquidThickness}}mm</div>
         </div>
         <div class="operation">
             <el-input-number size="normal" v-model="sliceIndex" :step="1" :max="max" :min="1"></el-input-number>
