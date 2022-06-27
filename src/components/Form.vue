@@ -69,8 +69,8 @@
             </div>
             <div class="group">
                 <el-form-item label="拉速" prop="dragSpeed">
-                    <el-input-number size="small" v-model="form.dragSpeed" :precision="2" :step="0.1" :min="1.5"
-                                     :max="150"></el-input-number>
+                    <el-input-number size="small" v-model="form.dragSpeed" :precision="2" :step="0.1" :min="0.3"
+                                     :max="1.65"></el-input-number>
                     <el-button class="item-button" v-show="calculationStarted" :disabled="!calculationStarted"
                                size="mini" type="primary"
                                icon="el-icon-right"
@@ -207,7 +207,7 @@
                            :disabled="!calculationStarted">查看切片温度详情
                 </el-button>
                 <el-button :round="true" size="small" type="warning" @click="showDetailCurves"
-                           :disabled="!calculationStarted">查看纵切面温度分布
+                           :disabled="calculationStarted">查看纵切面温度分布
                 </el-button>
 <!--                <el-button :round="true" size="small" type="warning" @click="startTail" :disabled="!calculationStarted">-->
 <!--                    拉尾坯-->
@@ -280,7 +280,7 @@
                     ],
                     dragSpeed: [
                         {required: true, message: '请输入速度', trigger: 'blur'},
-                        {type: 'number', min: 1.5, max: 150, message: '速度在 1.5 到 150之间', trigger: 'blur'}
+                        {type: 'number', min: 0.3, max: 1.65, message: '速度在 0.3 到 1.65之间', trigger: 'blur'}
                     ],
                 }
             }
@@ -475,6 +475,11 @@
                     case "vertical_slice2_generated": {
                         let content = JSON.parse(data.content)
                         self.$root.$emit("vertical_slice2_generated", content)
+                        break
+                    }
+                    case "shell_curves_generated": {
+                        let content = JSON.parse(data.content)
+                        self.$root.$emit("shell_curves_generated", content)
                         break
                     }
                 }

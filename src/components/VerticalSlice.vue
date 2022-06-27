@@ -63,6 +63,16 @@
                     </div>
                 </div>
             </el-tab-pane>
+            <el-tab-pane label="坯壳厚度与液相线到边界距离变化曲线">
+                <v-chart class="chart" :option="option1"></v-chart>
+                <div class="bottom">
+                    <div class="operation">
+                        <el-button size="normal" style="margin-left: 10px;" round type="primary"
+                                   @click="showShellCurves()">查看坯壳厚度与液相线到边界距离变化
+                        </el-button>
+                    </div>
+                </div>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -173,6 +183,79 @@
                         }
                     ]
                 },
+                option1: {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {type: 'cross'}
+                    },
+                    legend: {
+                        orient: "vertical",
+                        left: "right",
+                        data: ["宽面中心坯壳厚度", "宽面中心液相线距离边缘厚度", "窄面中心坯壳厚度", "窄面中心液相线距离边缘厚度"]
+                    },
+                    xAxis: [
+                        {
+                            type: 'value',
+                            name: '离液面距离',
+                            min: 0,
+                            max: 0,
+                            position: 'left',
+                            axisLabel: {
+                                formatter: '{value} mm'
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '厚度',
+                            min: 0,
+                            max: 0,
+                            position: 'left',
+                            axisLabel: {
+                                formatter: '{value} mm'
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: "宽面中心坯壳厚度",
+                            type: 'line',
+                            smooth: true,
+                            color: "#FFC107",
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: []
+                        },
+                        {
+                            name: "宽面中心液相线距离边缘厚度",
+                            type: 'line',
+                            smooth: true,
+                            color: "#FF5252",
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: []
+                        },
+                        {
+                            name: "窄面中心坯壳厚度",
+                            type: 'line',
+                            smooth: true,
+                            color: "#2196F3",
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: []
+                        },
+                        {
+                            name: "窄面中心液相线距离边缘厚度",
+                            type: 'line',
+                            smooth: true,
+                            color: "#4CAF50",
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: []
+                        }
+                    ]
+                },
                 container: undefined,
                 width: 0,
                 height: 0,
@@ -263,6 +346,8 @@
                 this.downLength = (this.config.coordinate.z_length - this.config.coordinate.center_end_distance) / this.zScale
 
                 this.option.xAxis[0].max = this.config.coordinate.z_length
+                this.option1.xAxis[0].max = this.config.coordinate.z_length
+                this.option1.yAxis[0].max = this.config.coordinate.length / 2
 
                 console.log(this.rOut, this.rIn)
 
@@ -293,7 +378,6 @@
                     this.option.series[1].data = data.center_inner
                     this.option.series[2].data = data.edge_outer
                     this.option.series[3].data = data.edge_inner
-
                 })
 
                 this.$root.$on("vertical_slice2_generated", (data) => {
@@ -313,6 +397,14 @@
                     this.buildCurve(this.rOut, this.rIn, this.liquidSolidPositions.solid, 1, this.curvePointsSolid.geometry, this.solidColors, this.solidPositions, this.solidJoin)
 
                     this.showEdgeAtYIndex(this.yIndex)
+                })
+
+                this.$root.$on("shell_curves_generated", (data) => {
+                    console.log(data)
+                    this.option1.series[0].data = data.wide_shell_width
+                    this.option1.series[1].data = data.wide_liquid_width
+                    this.option1.series[2].data = data.narrow_shell_width
+                    this.option1.series[3].data = data.narrow_liquid_width
                 })
             })
 
@@ -765,6 +857,15 @@
                 index--
                 index = Math.floor(index / this.zScale)
                 this.changeText(index)
+            },
+            showShellCurves: function() {
+                let message = {
+                    type: "generate_shell_curves",
+                    content: ""
+                }
+                if (this.conn !== undefined) {
+                    this.conn.send(JSON.stringify(message));
+                }
             },
             createPalette: function () {
                 //颜色条的颜色分布
