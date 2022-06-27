@@ -348,7 +348,7 @@
 
                 this.option.xAxis[0].max = this.config.coordinate.z_length
                 this.option1.xAxis[0].max = this.config.coordinate.z_length
-                this.option1.yAxis[0].max = this.config.coordinate.length / 2
+                this.option1.yAxis[0].max = this.config.coordinate.width / 2
 
                 console.log(this.rOut, this.rIn)
 
